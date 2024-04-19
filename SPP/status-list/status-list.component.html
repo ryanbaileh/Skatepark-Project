@@ -1,0 +1,62 @@
+<shell-page-layout mode="card">
+    <shell-page-layout-header>
+      <shell-breadcrumbs [@fadeInRight] current="Statuses"></shell-breadcrumbs>
+    </shell-page-layout-header>
+  
+    <shell-page-layout-content [@fadeInUp]>
+      <shell-list [columns]="columns" (filterChange)="onFilterChange($event)" >
+        <div class="actions">
+          <button class="create" (click)="createItem()" type="button" mat-mini-fab color="primary">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+  
+        <table [dataSource]="dataSource" mat-table matSort>
+  
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+  
+          <!-- fullName Column -->
+          <ng-container *ngFor="let column of columns">
+            <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+              <td *matCellDef="let row" mat-cell>
+                {{ row[column.property] }}
+              </td>
+            </ng-container>
+          </ng-container>
+  
+  
+          <!-- actions Column -->
+          <ng-container matColumnDef="actions">
+            <th *matHeaderCellDef class="actions-cell" mat-header-cell mat-sort-header></th>
+            <td *matCellDef="let row" class="actions-cell" mat-cell>
+              <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu" (click)="$event.stopPropagation()">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+  
+              <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                <button (click)="updateItem(row)" mat-menu-item>
+                  <span>Edit</span>
+                </button>
+                <button (click)="deleteItem(row)" mat-menu-item>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+  
+          <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: visibleColumns;"
+              (click)="updateItem(row)"
+              class="clickable route-animations-elements"
+              mat-row></tr>
+        </table>
+  
+        <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+  
+      </shell-list>
+  
+  
+    </shell-page-layout-content>
+  </shell-page-layout>

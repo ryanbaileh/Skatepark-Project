@@ -1,0 +1,252 @@
+<shell-page-layout>
+  <shell-page-layout-header>
+    <shell-breadcrumbs [@fadeInRight] [crumbs]="[{route: '/skatepark-list',text:'Skateparks'}]"
+      [current]="[data.spotName]"></shell-breadcrumbs>
+  </shell-page-layout-header>
+
+  <shell-page-layout-content [@fadeInUp]>
+
+
+
+
+    <div class="content" fxLayout="column" fxFlexFill fxLayoutGap="10">
+      <div fxFlex="50" fxLayout="row" fxLayoutGap="10">
+        <div fxFlex="50" class="sec2">
+
+
+
+
+          <!-- Slideshow container -->
+          <div class="slideshow-container">
+
+            <div #slides class="mySlides fade">
+              <google-map [options]="options" height="400px" width="100%">
+                <map-marker [options]="markerOptions"></map-marker>
+              </google-map>
+            </div>
+            <!-- Full-width images with number and caption text -->
+            <div #slides class="mySlides fade" *ngFor="let o of data.mediaList" style="text-align: center;">
+              <img fxFlexFill [src]="(APIBasePath + '/api/Skateparks/' + o.spotID  +'/MediaFile/' + o.mediaID)" />
+              <div class="text">{{o.mediaCreditForDisplay}}</div>
+            </div>
+
+
+            <!-- Next and previous buttons -->
+            <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+            <a class="next" (click)="plusSlides(1)">&#10095;</a>
+          </div>
+
+
+          <br>
+
+          <!-- The dots/circles -->
+          <div style="text-align:center">
+            <span #dots class="dot" (click)="currentSlide(0)"></span>
+            <span #dots class="dot" (click)="currentSlide(i+1)" *ngFor="let o of data.mediaList; index as i"></span>
+          </div>
+
+
+        </div>
+        <div fxFlex="50" fxLayout="column">
+
+
+
+          <!--Addres info-->
+          <div fxLayout="row">
+            <div fxLayout="column" style="width:400px">
+              <h3 class="margin-0">{{data.spotName}} - {{data.spotNickName}}</h3>
+              <h4 class="margin-top-0 secondary-text">{{data.spotAddress}} {{data.spotCity}} {{data.spotState}},
+                {{data.spotZIP}} {{data.spotCountry}}</h4>
+            </div>
+
+            <button mat-mini-fab color="primary" (click)="editSpot()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+
+
+
+
+          <!-- <button type="button" mat-icon-button>
+              <mat-icon> plus </mat-icon>
+            </button> -->
+          <!--chips-->
+          <mat-chip-list>
+            <mat-chip color="primary">{{data.spotTypeName}}</mat-chip>
+            <mat-chip>{{this.contructionDisplay}}</mat-chip>
+          </mat-chip-list>
+
+
+          <mat-divider style="margin-top: 10px; margin-bottom: 10px;"></mat-divider>
+
+          <div fxLayout="row">
+            <div fxLayout="column" style="width:400px">
+              <!--Attributes (row 1)-->
+              <div fxLayout="row" fxLayoutGap="15" *ngIf="data" style="margin-top: 10px; margin-bottom: 10px;">
+                <img [ngClass]="HasAttribute(paidAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_Paid.png">
+
+                <img [ngClass]="HasAttribute(supervisedAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_Supervised.png">
+
+                <img [ngClass]="HasAttribute(gatedAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_Gated.png">
+
+                <img [ngClass]="HasAttribute(restrictedAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_RestrictedAccess.png">
+
+                <img [ngClass]="HasAttribute(helmetAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_HelmetRequired.png">
+              </div>
+
+              <!--Attributes (row 2)-->
+              <div fxLayout="row" fxLayoutGap="15" *ngIf="data">
+                <img [ngClass]="HasAttribute(retailAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_Retail.png">
+
+                <img [ngClass]="HasAttribute(lightsAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_Lights.png">
+
+                <img [ngClass]="HasAttribute(shadeAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_ShadeStructure.png">
+
+                <img [ngClass]="HasAttribute(waterAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_Water.png">
+                <img [ngClass]="HasAttribute(restroomsAttribute) ?  'enabled' : 'disabled'"
+                  src="../../../assets/img/spotattributes/SpotAttribute_Restrooms.png">
+              </div>
+
+            </div>
+            <button mat-mini-fab color="primary" (click)="editSpotAttribute()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <mat-divider style="margin-top: 10px; margin-bottom: 10px;"></mat-divider>
+          <!--Riders-->
+          <div fxLayout="row"><b>RIDERS</b></div>
+          <div fxLayout="row" fxLayoutGap="15" *ngIf="data">
+            <img [ngClass]="IsRiderAllowed('skateboard') ?  'enabled' : 'disabled'"
+              src="../../../assets/img/spotattributes/SpotAttribute_Rider_Skateboard.png">
+
+            <img [ngClass]="IsRiderAllowed('bicycle') ?  'enabled' : 'disabled'"
+              src="../../../assets/img/spotattributes/SpotAttribute_Rider_Bicycle.png">
+
+            <img [ngClass]="IsRiderAllowed('wheelchair') ?  'enabled' : 'disabled'"
+              src="../../../assets/img/spotattributes/SpotAttribute_Rider_Wheelchair.png">
+
+            <img [ngClass]="IsRiderAllowed('inline') ?  'enabled' : 'disabled'"
+              src="../../../assets/img/spotattributes/SpotAttribute_Rider_Inline.png">
+
+            <img [ngClass]="IsRiderAllowed('roller') ?  'enabled' : 'disabled'"
+              src="../../../assets/img/spotattributes/SpotAttribute_Rider_Roller.png">
+
+            <img [ngClass]="IsRiderAllowed('scooter') ?  'enabled' : 'disabled'"
+              src="../../../assets/img/spotattributes/SpotAttribute_Rider_Scooter.png">
+          </div>
+
+          <!--Size and Design-->
+
+          <div fxLayout="column" *ngIf="sizeAttribute || designerAttribute">
+            <mat-divider style="margin-top: 10px; margin-bottom: 10px;"></mat-divider>
+            <div fxLayout="row" fxLayoutGap="10" *ngIf="sizeAttribute">
+              <div fxFlex="20"><b>SIZE:</b></div>
+              <div fxFlex="80">{{sizeAttribute.spotAttributeValue | number}} sq ft</div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10" *ngIf="designerAttribute">
+              <div fxFlex="20"><b>DESIGNER:</b></div>
+              <div fxFlex="80">{{designerAttribute.spotAttributeValue}}</div>
+            </div>
+          </div>
+
+          <!--Award-->
+          <div *ngIf="data.isFoundatuonAward" fxFlexFill fxLayout="column">
+            <mat-divider style="margin-top: 10px; margin-bottom: 10px;"></mat-divider>
+            <div><b>AWARD RECIPIENT</b></div>
+            <div fxLayout="row" fxLayoutGap="10">
+              <div fxFlex="20"><b>Year:</b></div>
+              <div fxFlex="80">{{data.foundationAwardYear}}</div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10">
+              <div fxFlex="20"><b>Amount:</b></div>
+              <div fxFlex="80">{{data.foundationAwardAmount}}</div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="10">
+              <div fxFlex="20"><b>Foundation ID:</b></div>
+              <div fxFlex="80">{{data.foundationAwardID}}</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div fxFlex="50" fxLayout="column" fxLayoutGap="10">
+
+        <h3 class="margin-0">Reviews</h3>
+        <table style="width: 50%" *ngFor="let o of data.reviewList">
+          <tr *ngIf="o.reviewText">
+            <td>
+              <div *ngIf="o.rating==0" fxLayout="row">
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+              </div>
+              <div *ngIf="o.rating==1" fxLayout="row">
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+              </div>
+              <div *ngIf="o.rating==2" fxLayout="row">
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+              </div>
+              <div *ngIf="o.rating==3" fxLayout="row">
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+              </div>
+              <div *ngIf="o.rating==4" fxLayout="row">
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star_border</mat-icon>
+              </div>
+              <div *ngIf="o.rating==5" fxLayout="row">
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+                <mat-icon aria-hidden="false">star</mat-icon>
+              </div>
+
+            </td>
+            <td style="text-align:right"><i>{{o.createdByUser.userName}}</i> {{o.createdOn | date}}</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              {{o.reviewText}}
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+  </shell-page-layout-content>
+</shell-page-layout>

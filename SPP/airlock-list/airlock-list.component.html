@@ -1,0 +1,28 @@
+<shell-page-layout mode="card">
+  <shell-page-layout-header>
+    <shell-breadcrumbs [@fadeInRight] current="Airlock"></shell-breadcrumbs>
+  </shell-page-layout-header>
+
+  <shell-page-layout-content [@fadeInUp]>
+    <mat-tab-group class="tabs shell-tabs">
+      <mat-tab label="Skateparks to approve">
+        <spp-spot-airlock-list></spp-spot-airlock-list>
+      </mat-tab>
+
+      <mat-tab label="Media to approve">
+        <spp-media-airlock-list></spp-media-airlock-list>
+      </mat-tab>
+      <mat-tab label="Reviews to approve">
+        <spp-review-airlock-list></spp-review-airlock-list>
+      </mat-tab>
+
+
+    </mat-tab-group>
+
+
+
+
+
+
+  </shell-page-layout-content>
+</shell-page-layout>

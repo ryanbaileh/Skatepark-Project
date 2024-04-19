@@ -1,0 +1,25 @@
+<div mat-dialog-title>{{title}}</div>
+
+<form #editForm="ngForm" ngNativeValidate>
+  <mat-dialog-content>
+
+    <div>
+      <div fxLayout="column" fxLayoutGap.gt-sm="24px">
+        <div class ="readOnlyLabel" *ngIf="id >= 0">
+          Spot Attribute ID: {{data.spotAttributeID}}
+        </div>
+        <mat-form-field fxFlex>
+
+          <mat-label>Spot Attribute Name</mat-label>
+          <input type="text" maxlength = "50" autocomplete="off" [(ngModel)]="data.spotAttributeName" name="spotAttributeName" matInput required>
+        </mat-form-field>
+
+      </div>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row"  fxLayoutAlign="end end" >
+    <button (click)="save()" mat-raised-button color="primary">Save </button>
+    <button (click)="cancel()" mat-raised-button>Cancel</button>
+  </mat-dialog-actions>
+</form>

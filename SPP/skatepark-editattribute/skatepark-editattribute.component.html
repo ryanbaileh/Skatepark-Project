@@ -1,0 +1,125 @@
+<div mat-dialog-title>{{title}}</div>
+
+<form #editForm="ngForm" ngNativeValidate>
+  <mat-dialog-content>
+
+
+
+    <div fxLayout="row" fxLayoutGap.gt-sm="90px">
+
+
+
+
+
+
+      <!--Row 1-->
+      <div fxLayout="column" fxLayoutGap="35" *ngIf="data" style="margin-top: 10px; margin-bottom: 10px;">
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_Paid.png">
+
+          <mat-slide-toggle color="primary" [(ngModel)]="spotPaid" name="spotPaid"></mat-slide-toggle>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_Supervised.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="spotSupervised" name="spotSupervised"></mat-slide-toggle>
+        </div>
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_Gated.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="spotGated" name="spotGated"></mat-slide-toggle>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_RestrictedAccess.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="spotRestrictedAccess" name="spotRestrictedAccess">
+          </mat-slide-toggle>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_HelmetRequired.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="spotHelmetRequired" name="spotHelmetRequired">
+          </mat-slide-toggle>
+        </div>
+        <mat-form-field fxFlex>
+          <mat-label>Size</mat-label>
+          <input type="text" maxlength="50" autocomplete="off" [(ngModel)]="size" matInput placeholder="Size"
+            name="spotSize">
+        </mat-form-field>
+      </div>
+      <!--Row 2-->
+
+      <div fxLayout="column" fxLayoutGap="35" *ngIf="data">
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_Retail.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="spotRetail" name="spotRetail"></mat-slide-toggle>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_Lights.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="spotLights" name="spotLights"></mat-slide-toggle>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_ShadeStructure.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="shadeStructure" name="shadeStructure"></mat-slide-toggle>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_Water.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="SpotWater" name="spotWater"></mat-slide-toggle>
+        </div>
+        <div fxLayout="row" fxLayoutGap="15">
+          <img src="../../../assets/img/spotattributes/SpotAttribute_Restrooms.png">
+          <mat-slide-toggle color="primary" [(ngModel)]="SpotRestrooms" name="spotRestrooms"></mat-slide-toggle>
+        </div>
+        <mat-form-field fxFlex>
+          <mat-label>Designer</mat-label>
+          <input type="text" maxlength="50" autocomplete="off" name="spotDesigner" [(ngModel)]="designer" matInput
+            placeholder="Designer">
+        </mat-form-field>
+      </div>
+
+
+
+
+      <div fxLayout="column" fxLayoutGap="30px">
+        <mat-slide-toggle color="primary" [(ngModel)]="data.isFoundatuonAward" name="isFoundatuonAward">Is Foundation
+          award</mat-slide-toggle>
+        <div *ngIf="data.isFoundatuonAward" class="row container-fluid" id="divshow" fxLayout="column"
+          fxLayoutGap="30px">
+
+
+          <mat-form-field fxFlex>
+            <mat-label>Foundation Year </mat-label>
+            <input type="text" maxlength="50" autocomplete="off" [(ngModel)]="data.foundationAwardYear"
+              name="foundationAwardAmount" matInput placeholder="Foundation Award">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-label>Foundation Award</mat-label>
+            <input type="text" maxlength="50" autocomplete="off" [(ngModel)]="data.foundationAwardAmount"
+              name="foundationAwardAmount" matInput placeholder="Foundation Award">
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-label>Foundation Id</mat-label>
+            <input type="text" maxlength="50" autocomplete="off" [(ngModel)]="data.foundationAwardID"
+              name="foundationAwardID" matInput placeholder="Foundation Id">
+          </mat-form-field>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+
+
+
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end end">
+    <button (click)="save()" mat-raised-button color="primary">Save </button>
+    <button (click)="cancel()" mat-raised-button>Cancel</button>
+
+
+  </mat-dialog-actions>
+</form>
